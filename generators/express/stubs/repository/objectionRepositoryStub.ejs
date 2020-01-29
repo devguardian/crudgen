@@ -1,0 +1,17 @@
+const <%-modelName%> = require('../models/<%-modelName%>');
+
+class <%-modelName%>Repository{
+    static findById(id) {
+        return <%-modelName%>.query().findById(id);
+    }
+
+    static insert(data) {
+        return <%-modelName%>.query().insert(data);
+    }
+
+    static deleteById(id) {
+        await <%-modelName%>.query().deleteById(id);
+    }
+}
+
+module.exports = <%-modelName%>Repository;

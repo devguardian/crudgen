@@ -1,0 +1,11 @@
+{
+  "name": "parser",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "^3.0.1",
+    "lodash": "^4.17.15",
+    "pluralize": "^8.0.0"
+  }
+}

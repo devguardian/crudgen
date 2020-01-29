@@ -1,0 +1,38 @@
+const { check, validationResult } = require('express-validator');
+
+const <%-modelName%>Repository = require('../repositories/<%-modelName%>Repository');
+
+router.get('/:id', async (req, res) => {
+    // gets one <%-modelName%>, found by id.
+    const <%-modelName%> = await <%-modelName%>Repository.findById(req.params.id);
+    res.json(<%-modelName%>);
+});
+
+router.post('/', [
+    <%_ tableFields.forEach(field => { _%>
+    <%-validationRuleBuilder(field)%>
+    <%_ }) %>
+], async (req, res) => {
+    // Finds the validation errors in this request and wraps them in an object with handy functions
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+  
+    // creates a new <%-modelName%> from the request body
+    // only allows the <%-modelName%> and creator fields for safety
+    const new<%-modelName%> = req.body;
+  
+    const <%-modelName%> = await <%-modelName%>Repository.insert(new<%-modelName%>);
+  
+    res.json(<%-modelName%>);
+});
+
+router.delete('/:id', async (req, res) => {
+    // deletes an <%-modelName%>
+    await <%-modelName%>Repository.deleteById(req.params.id)
+  
+    res.json({ success: true });
+});
+
+module.exports = router;

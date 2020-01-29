@@ -1,0 +1,22 @@
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+exports.up = knex => {
+  return knex.schema
+    .createTable("<%= tableName %>", knex => table => {
+    <%_ tableFields.forEach(field => { _%>
+      <%- knexSchemaBuilder(field) %>
+    <%_ }); _%>
+
+      table.timestamps(true, true);
+    })
+    .then(() => {
+      console.log(`<%= tableName %> table created successfully.`);
+    })
+    .catch(err => {
+      console.log(`Failed to create <%= tableName %> table`, err);
+    });
+};
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+exports.down = knex => {
+  return knex.schema.dropTableIfExists("<%= tableName %>");
+};
