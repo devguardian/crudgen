@@ -1,6 +1,8 @@
 const fs = require('fs');
 const pluralize = require('pluralize');
-
+const program = require('commander');
+const parser = require('./parsers/mysql/parser');
+const { toPascalCase, camalize } = require('./utils/str');
 const {     
   expressRoutesGeneratorFromSql,
   generateKnexMigrationFromSql,
@@ -8,26 +10,25 @@ const {
   objectionModelRepositoryGeneratorFromSql,
 } = require('./generators/express');
 
-const ast = fs.readFileSync('./parsed.json', 'utf-8');
+program.version('0.0.1');
 
-function toPascalCase(string) {
-  return `${string}`
-    .replace(new RegExp(/[-_]+/, 'g'), ' ')
-    .replace(new RegExp(/[^\w\s]/, 'g'), '')
-    .replace(
-      new RegExp(/\s+(.)(\w+)/, 'g'),
-      ($1, $2, $3) => `${$2.toUpperCase() + $3.toLowerCase()}`
-    )
-    .replace(new RegExp(/\s/, 'g'), '')
-    .replace(new RegExp(/\w/), s => s.toUpperCase());
-}
+program
+  .option('--file [sql]', 'sql file')
 
-function camalize(str) {
-  return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
-}
+program.parse(process.argv);
+
+if (!program.file) throw Error("--file needs a valid sql file");
+
+const sql = fs.readFileSync(__dirname+"/"+program.file, 'utf-8');
+const ast = parser.parse(sql);
+
+fs.mkdirSync('generated/migrations', { recursive: true });
+fs.mkdirSync('generated/routes', { recursive: true });
+fs.mkdirSync('generated/models', { recursive: true });
+fs.mkdirSync('generated/repositories', { recursive: true });
 
 
-JSON.parse(ast).tables.forEach(table => {
+ast.tables.forEach(table => {
   const modelName = toPascalCase(pluralize.singular(table.name));
 
   generateKnexMigrationFromSql(table.name, table.fields)
