@@ -3,7 +3,7 @@ const pluralize = require('pluralize');
 const program = require('commander');
 const parser = require('./parsers/mysql/parser');
 const { toPascalCase, camalize } = require('./utils/str');
-const {     
+const {
   expressRoutesGeneratorFromSql,
   generateKnexMigrationFromSql,
   generateObjectionModelFromSql,
@@ -48,6 +48,6 @@ ast.tables.forEach(table => {
 
   objectionModelRepositoryGeneratorFromSql(modelName, table.name, table.fields)
     .then(str => {
-      fs.writeFileSync(`generated/repositories/${modelName}Respository.js`, str);
+      fs.writeFileSync(`generated/repositories/${modelName}Repository.js`, str);
     });
 });

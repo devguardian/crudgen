@@ -1,6 +1,6 @@
 const <%-modelName%> = require('../models/<%-modelName%>');
 
-class <%-modelName%>Repository{
+class <%-modelName%>Repository {
     static findById(id) {
         return <%-modelName%>.query().findById(id);
     }
@@ -9,7 +9,7 @@ class <%-modelName%>Repository{
         return <%-modelName%>.query().insert(data);
     }
 
-    static deleteById(id) {
+    static async deleteById(id) {
         await <%-modelName%>.query().deleteById(id);
     }
 }

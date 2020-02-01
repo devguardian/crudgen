@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 exports.up = knex => {
   return knex.schema
-    .createTable("<%= tableName %>", knex => table => {
+    .createTable("<%= tableName %>", table => {
     <%_ tableFields.forEach(field => { _%>
       <%- knexSchemaBuilder(field) %>
     <%_ }); _%>

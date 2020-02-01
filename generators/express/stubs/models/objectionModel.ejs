@@ -1,10 +1,6 @@
 const Objection = require('objection');
 
 class <%-modelName%> extends Objection.Model {
-    <%_ tableFields.forEach(field => { _%>
-    <%- camalize(field.name) %>;
-    <%_ }) _%>
-
     static get tableName () {
         return '<%-tableName%>';
     }
@@ -12,19 +8,20 @@ class <%-modelName%> extends Objection.Model {
     static get softDelete() {
         return false;
     }
-    
+
     static get relationMappings() {
         return {
 
         };
     }
 
-    static jsonSchema = {
+    static get jsonSchema() {
+      return {
         type: 'object',
         required: [
             <% tableFields
                 .filter(field => field.not_null)
-                .map(field => {_%> "<%-field.name%>", 
+                .map(field => {_%> "<%-field.name%>",
             <% }) %>
         ],
         properties: {
@@ -32,8 +29,8 @@ class <%-modelName%> extends Objection.Model {
             <%-objectionModelSchemaGenerator(field)%>
         <%_ }) _%>
         },
-    };
-    
+      };
+    }
 }
 
 module.exports = <%-modelName%>;

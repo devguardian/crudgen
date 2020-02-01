@@ -19,20 +19,20 @@ router.post('/', [
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-  
+
     // creates a new <%-modelName%> from the request body
     // only allows the <%-modelName%> and creator fields for safety
     const new<%-modelName%> = req.body;
-  
+
     const <%-modelName%> = await <%-modelName%>Repository.insert(new<%-modelName%>);
-  
+
     res.json(<%-modelName%>);
 });
 
 router.delete('/:id', async (req, res) => {
     // deletes an <%-modelName%>
     await <%-modelName%>Repository.deleteById(req.params.id)
-  
+
     res.json({ success: true });
 });
 
