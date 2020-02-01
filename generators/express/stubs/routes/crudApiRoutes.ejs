@@ -3,10 +3,18 @@ const router = require('express').Router();
 
 const <%-modelName%>Repository = require('../repositories/<%-modelName%>Repository');
 
+router.get('/', async (req, res) => {
+  // gets one <%-modelName%>, found by id.
+  const <%-modelName%> = await <%-modelName%>Repository.all();
+  res.json({
+    data: <%-modelName%>
+  });
+});
+
 router.get('/:id', async (req, res) => {
     // gets one <%-modelName%>, found by id.
     const <%-modelName%> = await <%-modelName%>Repository.findById(req.params.id);
-    res.json(<%-modelName%>);
+    res.json({ data: <%-modelName%>});
 });
 
 router.post('/', [
@@ -26,7 +34,7 @@ router.post('/', [
 
     const <%-modelName%> = await <%-modelName%>Repository.insert(new<%-modelName%>);
 
-    res.json(<%-modelName%>);
+    res.json({ data: <%-modelName%> });
 });
 
 router.delete('/:id', async (req, res) => {

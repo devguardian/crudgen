@@ -1,7 +1,11 @@
 const <%-modelName%> = require('../models/<%-modelName%>');
 
 class <%-modelName%>Repository {
-    static findById(id) {
+  static all() {
+    return <%-modelName%>.query();
+  }
+
+  static findById(id) {
         return <%-modelName%>.query().findById(id);
     }
 
