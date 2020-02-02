@@ -20,7 +20,7 @@ program.parse(process.argv);
 if (!program.file) throw Error("--file needs a valid sql file");
 
 const sql = fs.readFileSync(__dirname+"/"+program.file, 'utf-8');
-const ast = parser.parse(sql);
+const parsedSQL = parser.parse(sql);
 
 fs.mkdirSync('generated/migrations', { recursive: true });
 fs.mkdirSync('generated/routes', { recursive: true });
@@ -28,7 +28,7 @@ fs.mkdirSync('generated/models', { recursive: true });
 fs.mkdirSync('generated/repositories', { recursive: true });
 
 
-ast.tables.forEach(table => {
+parsedSQL.tables.forEach(table => {
   const modelName = toPascalCase(pluralize.singular(table.name));
 
   generateKnexMigrationFromSql(table.name, table.fields)

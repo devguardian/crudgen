@@ -1,0 +1,406 @@
+{
+  "tables": [
+    {
+      "name": "companies",
+      "fields": [
+        {
+          "name": "id",
+          "type": {
+            "type_name": "INT(255)",
+            "args": "255"
+          },
+          "unsigned": true,
+          "pk": true,
+          "not_null": true,
+          "increment": true
+        },
+        {
+          "name": "name",
+          "type": {
+            "type_name": "VARCHAR(255)",
+            "args": "255"
+          },
+          "not_null": true
+        },
+        {
+          "name": "address",
+          "type": {
+            "type_name": "VARCHAR(255)",
+            "args": "255"
+          },
+          "not_null": true
+        },
+        {
+          "name": "phone_no",
+          "type": {
+            "type_name": "VARCHAR(255)",
+            "args": "255"
+          },
+          "not_null": true
+        },
+        {
+          "name": "email",
+          "type": {
+            "type_name": "VARCHAR(255)",
+            "args": "255"
+          },
+          "not_null": true
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "name": "admins",
+      "fields": [
+        {
+          "name": "id",
+          "type": {
+            "type_name": "INT(255)",
+            "args": "255"
+          },
+          "unsigned": true,
+          "pk": true,
+          "not_null": true,
+          "increment": true
+        },
+        {
+          "name": "company_id",
+          "type": {
+            "type_name": "INT(255)",
+            "args": "255"
+          },
+          "unsigned": true,
+          "not_null": true,
+          "inline_ref": [
+            {
+              "endpoint": {
+                "tableName": "companies",
+                "fieldName": "id",
+                "relation": "1"
+              }
+            }
+          ]
+        },
+        {
+          "name": "email",
+          "type": {
+            "type_name": "VARCHAR(255)",
+            "args": "255"
+          },
+          "unique": true,
+          "not_null": true
+        },
+        {
+          "name": "password",
+          "type": {
+            "type_name": "VARCHAR(255)",
+            "args": "255"
+          },
+          "not_null": true
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "name": "departments",
+      "fields": [
+        {
+          "name": "id",
+          "type": {
+            "type_name": "INT(255)",
+            "args": "255"
+          },
+          "unsigned": true,
+          "pk": true,
+          "not_null": true,
+          "increment": true
+        },
+        {
+          "name": "company_id",
+          "type": {
+            "type_name": "INT(255)",
+            "args": "255"
+          },
+          "unsigned": true,
+          "not_null": true,
+          "inline_ref": [
+            {
+              "endpoint": {
+                "tableName": "companies",
+                "fieldName": "id",
+                "relation": "1"
+              }
+            }
+          ]
+        },
+        {
+          "name": "name",
+          "type": {
+            "type_name": "VARCHAR(255)",
+            "args": "255"
+          },
+          "not_null": true
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "name": "employees",
+      "fields": [
+        {
+          "name": "id",
+          "type": {
+            "type_name": "INT(255)",
+            "args": "255"
+          },
+          "unsigned": true,
+          "pk": true,
+          "not_null": true,
+          "increment": true
+        },
+        {
+          "name": "department_id",
+          "type": {
+            "type_name": "INT(255)",
+            "args": "255"
+          },
+          "unsigned": true,
+          "not_null": true,
+          "inline_ref": [
+            {
+              "endpoint": {
+                "tableName": "departments",
+                "fieldName": "id",
+                "relation": "1"
+              }
+            }
+          ]
+        },
+        {
+          "name": "company_id",
+          "type": {
+            "type_name": "INT(255)",
+            "args": "255"
+          },
+          "unsigned": true,
+          "not_null": true,
+          "inline_ref": [
+            {
+              "endpoint": {
+                "tableName": "companies",
+                "fieldName": "id",
+                "relation": "1"
+              }
+            }
+          ]
+        },
+        {
+          "name": "first_name",
+          "type": {
+            "type_name": "VARCHAR(255)",
+            "args": "255"
+          },
+          "not_null": true
+        },
+        {
+          "name": "last_name",
+          "type": {
+            "type_name": "VARCHAR(255)",
+            "args": "255"
+          },
+          "not_null": true
+        },
+        {
+          "name": "email",
+          "type": {
+            "type_name": "VARCHAR(255)",
+            "args": "255"
+          },
+          "not_null": true
+        },
+        {
+          "name": "phone_no",
+          "type": {
+            "type_name": "VARCHAR(255)",
+            "args": "255"
+          },
+          "not_null": true
+        },
+        {
+          "name": "is_active",
+          "type": {
+            "type_name": "BOOLEAN",
+            "args": null
+          },
+          "not_null": true
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "name": "groups",
+      "fields": [
+        {
+          "name": "id",
+          "type": {
+            "type_name": "INT(255)",
+            "args": "255"
+          },
+          "unsigned": true,
+          "pk": true,
+          "not_null": true,
+          "increment": true
+        },
+        {
+          "name": "name",
+          "type": {
+            "type_name": "VARCHAR(50)",
+            "args": "50"
+          },
+          "not_null": true
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "name": "employees_groups",
+      "fields": [
+        {
+          "name": "id",
+          "type": {
+            "type_name": "INT(255)",
+            "args": "255"
+          },
+          "unsigned": true,
+          "pk": true,
+          "not_null": true,
+          "increment": true
+        },
+        {
+          "name": "group_id",
+          "type": {
+            "type_name": "INT(255)",
+            "args": "255"
+          },
+          "unsigned": true,
+          "not_null": true,
+          "inline_ref": [
+            {
+              "endpoint": {
+                "tableName": "groups",
+                "fieldName": "id",
+                "relation": "1"
+              }
+            }
+          ]
+        },
+        {
+          "name": "employee_id",
+          "type": {
+            "type_name": "INT(255)",
+            "args": "255"
+          },
+          "unsigned": true,
+          "not_null": true,
+          "inline_ref": [
+            {
+              "endpoint": {
+                "tableName": "employees",
+                "fieldName": "id",
+                "relation": "1"
+              }
+            }
+          ]
+        }
+      ],
+      "indexes": []
+    }
+  ],
+  "refs": [
+    {
+      "endpoints": [
+        {
+          "tableName": "admins",
+          "fieldName": "company_id",
+          "relation": "*"
+        },
+        {
+          "tableName": "companies",
+          "fieldName": "id",
+          "relation": "1"
+        }
+      ]
+    },
+    {
+      "endpoints": [
+        {
+          "tableName": "departments",
+          "fieldName": "company_id",
+          "relation": "*"
+        },
+        {
+          "tableName": "companies",
+          "fieldName": "id",
+          "relation": "1"
+        }
+      ]
+    },
+    {
+      "endpoints": [
+        {
+          "tableName": "employees",
+          "fieldName": "department_id",
+          "relation": "*"
+        },
+        {
+          "tableName": "departments",
+          "fieldName": "id",
+          "relation": "1"
+        }
+      ]
+    },
+    {
+      "endpoints": [
+        {
+          "tableName": "employees",
+          "fieldName": "company_id",
+          "relation": "*"
+        },
+        {
+          "tableName": "companies",
+          "fieldName": "id",
+          "relation": "1"
+        }
+      ]
+    },
+    {
+      "endpoints": [
+        {
+          "tableName": "employees_groups",
+          "fieldName": "group_id",
+          "relation": "*"
+        },
+        {
+          "tableName": "groups",
+          "fieldName": "id",
+          "relation": "1"
+        }
+      ]
+    },
+    {
+      "endpoints": [
+        {
+          "tableName": "employees_groups",
+          "fieldName": "employee_id",
+          "relation": "*"
+        },
+        {
+          "tableName": "employees",
+          "fieldName": "id",
+          "relation": "1"
+        }
+      ]
+    }
+  ],
+  "enums": []
+}
