@@ -21,6 +21,7 @@ class <%-modelName%> extends Objection.Model {
         required: [
             <% tableFields
                 .filter(field => field.not_null)
+                .filter(field => !field.increment)
                 .map(field => {_%> "<%-field.name%>",
             <% }) %>
         ],

@@ -12,11 +12,11 @@ function validationRuleBuilder(sqlField) {
   } else {
     rule+=`check('${sqlField.name}').trim()`;
   }
-  
+
   if(type.startsWith('varchar')) {
     rule+=``;
   } else if(type.startsWith('int')) {
-    rule+=`.isInt()`;
+    rule+=`.isInt().toInt()`;
   } else if(type.startsWith('boolean')) {
     rule+=``;
   } else if(type.startsWith('date')) {
