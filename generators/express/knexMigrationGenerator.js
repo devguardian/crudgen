@@ -21,13 +21,20 @@ function knexSchemaBuilder(sqlField) {
     } else {
       knexTable+=`.specificType('${sqlField.name}', '${sqlField.type.type_name}')`
     }
-  
+
+    if(sqlField.unsigned) knexTable += '.unsigned()';
     if(sqlField.not_null) knexTable += '.notNullable()';
     else knexTable +='.nullable()';
-  
+
     if(sqlField.pk) knexTable +='.primary()';
     if(sqlField.unique) knexTable +='.unique()';
-  
+
+    if(sqlField.inline_ref) {
+      sqlField.inline_ref.forEach(ref => {
+        knexTable += `.foreign('${sqlField.name}').references('${ref.endpoint.fieldName}').inTable('${ref.endpoint.tableName}')`
+      })
+    }
+
     return knexTable+';';
 }
 
